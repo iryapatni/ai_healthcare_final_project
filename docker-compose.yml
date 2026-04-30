@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend-rust
+
+  backend-rust:
+    build:
+      context: ./backend-rust
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - AI_SERVICE_URL=http://ai-service-python:8000
+    depends_on:
+      - ai-service-python
+
+  ai-service-python:
+    build:
+      context: ./ai-service-python
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      # Provide Google Gemini API key for LLM
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}

@@ -1,0 +1,47 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    # Frontend Build
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '22'
+    - name: Build Frontend
+      working-directory: ./frontend
+      run: |
+        npm install
+        npm run build
+
+    # Rust Backend Build
+    - name: Setup Rust
+      uses: dtolnay/rust-toolchain@stable
+    - name: Build Rust Backend
+      working-directory: ./backend-rust
+      run: cargo build --release
+
+    # Python Service Check
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Install Python Dependencies
+      working-directory: ./ai-service-python
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # Docker Build Check
+    - name: Build Docker Compose
+      run: docker-compose build
