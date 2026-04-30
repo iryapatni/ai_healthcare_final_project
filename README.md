@@ -7,7 +7,7 @@
 | 1 | Himani Jaiswal | EN22CS301423 |
 | 2 | Irya Patni | EN22CS301436 |
 | 3 | Uday Dubey | EN22EL301058 |
-| 4 | Chetan Oswal | EN22CS30 |
+| 4 | Chetan Oswal | EN22CS301295 |
 
 ---
 
@@ -66,6 +66,7 @@ The architecture consists of three core components:
 **Step-by-Step Instructions:**
 
 1. **Open a terminal** and navigate to the project directory:
+   For example:
    ```bash
    cd /Users/irya.patni/Desktop/Final_project
    ```
